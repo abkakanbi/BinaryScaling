@@ -1,0 +1,37 @@
+# This function sums up the scores of cases on survey question items,
+# calculate the average according to maximum and
+# minimum values obtainable on each question and scales the average, 
+# using a cut off 40% of the maximum obtainable, as 1 or 0 accordingly 
+
+fscale_01 <- function() {
+
+cat("The required cells for numeric entries are populated with zeros.\nMissing values should be either zero or any numbers resulting
+from method of dealing them\n")
+rno <- readline("Enter no. of rows: ")
+cno <- readline("Enter no. of columns: ")
+smax <- readline("Enter the scale maximum value: ")
+nr <- as.integer(rno)
+nc <- as.integer(cno) 
+maxs <- as.integer(smax)
+maxs <- 4/10*maxs 
+if 	((nr != 0 && nr < 0) && (nc != 0 && nc < 0))
+	{cat("You did not enter integers as row no. or column no. \n")}
+else 
+	{dm <- matrix(0, nr, nc)}
+
+df <- data.frame(dm)
+dff <- edit(df)
+
+print(dff)
+
+for (i in 1:nr) 
+	{assign("rowmean",(sum(dff[i,]))/nc, envir = .GlobalEnv)
+	if (rowmean < maxs || rowmean == maxs)
+		{assign("dv", c(), envir = .GlobalEnv);  dv <- append(dv, 1, length(dv))}
+	else
+		{assign("dv", c(), envir = .GlobalEnv); dv <- append(dv, 0, length(dv))}
+	}
+
+dv <- data.frame("binary code" = dv)
+dv
+}
